@@ -7,7 +7,8 @@ import TodoList from "./components/TodoList";
 import { NormalizedTodos, Filter } from "./types/index";
 import { createUid } from "./utils/index";
 import { ALL_FILTER } from "./constants";
-import { mockTodos } from "./mocks/index";
+import { getMockTodos } from "./mocks/index";
+import axios from "axios";
 
 
 
@@ -18,7 +19,14 @@ const TodoApp = () => {
     text: ALL_FILTER
   });
   useEffect(() => {
-    setTodo(mockTodos);
+    
+    async function getdefault():Promise<void>{
+      const randomStrings :string []= await (await axios.get("http://localhost:5000/")).data
+      console.log(randomStrings)
+      const mockTodos= getMockTodos(randomStrings);
+      setTodo(mockTodos);
+    }
+    getdefault()
   }, []);
   return (
     <div className="container">
