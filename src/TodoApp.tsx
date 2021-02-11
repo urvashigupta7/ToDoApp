@@ -21,8 +21,9 @@ const TodoApp = () => {
   useEffect(() => {
     
     async function getdefault():Promise<void>{
-      const randomStrings :string []= await (await axios.get("http://localhost:5000/")).data
+      const randomStrings :string []= await (await axios.get("/todo")).data
       console.log(randomStrings)
+      console.log(process.env)
       const mockTodos= getMockTodos(randomStrings);
       setTodo(mockTodos);
     }
