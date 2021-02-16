@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { NormalizedTodos } from "../types";
 import { createUid } from "../utils/index";
+import axios from "axios";
+import { config } from "process";
 
 
 const AddTodo = ({
@@ -18,13 +20,22 @@ const AddTodo = ({
     setSearchValue(target.value);
   };
 
-  const onClick = () => {
+  const onClick = async() => {
     const newid = createUid();
     const newtodo = {
       id: newid,
       text: searchValue,
       completed: false
     };
+    const tobesent={
+      todo:newtodo.text
+    }
+    const config={
+      headers:{
+        'Content-Type':'application/json'
+      }
+    }
+    await axios.post("/todo",tobesent,config)
     setTodo({ ...todos, [newid]: newtodo });
     setSearchValue("");
   };
